@@ -1,0 +1,66 @@
+﻿@using System.Linq
+@using System.Web.Mvc.Html
+@using MrCMS.Helpers
+@using MrCMS.Web.Apps.Glossaries.Entities
+@using MrCMS.Web.Apps.Glossaries.Helpers
+@using NHibernate.Criterion
+@model MrCMS.Web.Apps.Glossaries.Pages.Glossary
+@{
+
+
+    //var category = Request["Category"];
+
+    var query = QueryOver.Of<GlossaryItem>()
+                                     .Where(m => m.Glossary == Model)
+                                     .OrderBy(m => m.CreatedOn)
+                                     .Desc;
+
+    var pagedList = Model.PagedChildrenSiteEntity(pageNum: Request["p"].GetIntValue(1), query: query, pageSize: Model.PageSize);
+
+
+    //var searchModel = ViewData["socialevents-search-model"] as SocialEventSearchModel;
+}
+<hr />
+
+<a href="@Url.Action("Add", "GlossaryItems", new { id = Model.Id })" class="pull-right btn btn-success" data-toggle="fb-modal">Add Item</a>
+<h3>Glossary Items</h3>
+@if (pagedList != null && pagedList.Any())
+{
+    <table class="table table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Term
+                </th>
+                <th>
+                    Definition
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in pagedList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.Term)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Definition)
+                    </td>
+                    <td style="width: 110px">
+                        <div class="btn-group">
+                            @Html.ActionLink("Edit", "Edit", "GlossaryItems", new { id = item.Id }, new { @class = "btn btn-default btn-sm", data_toggle = "fb-modal" })
+                            @Html.ActionLink("Delete", "Delete", "GlossaryItems", new { id = item.Id }, new { @class = "btn btn-sm btn-danger", data_toggle = "fb-modal" })
+                        </div>
+                    <td />
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@Html.PageCurrentPage(pagedList, i => new { p = i }, PagedListRenderOptions.PageNumbersOnly)
+
+
+

@@ -1,0 +1,8 @@
+﻿@model MrCMS.Web.Apps.Glossaries.Pages.Glossary
+
+<div class="form-group">
+    @Html.LabelFor(model => model.PageSize)
+    @Html.TextBoxFor(model => model.PageSize, new{@class="form-control"})
+    @Html.ValidationMessageFor(model => model.PageSize)
+</div>
+

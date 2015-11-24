@@ -5,8 +5,11 @@ using MrCMS.Web.Apps.Glossaries.Pages;
 
 namespace MrCMS.Web.Apps.Glossaries.Services
 {
-    public interface IGlossaryService
+    public interface IGlossaryItemService
     {
+        void Add(GlossaryItem item);
+        void Update(GlossaryItem item);
+        void Delete(GlossaryItem item); 
         IPagedList<GlossaryItem> GetGlossaryItems(Glossary page, GlossarySearchModel model);     
     }
 }

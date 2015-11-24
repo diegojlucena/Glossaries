@@ -1,0 +1,30 @@
+﻿@using MrCMS.Helpers
+@using MrCMS.Paging
+@using MrCMS.Web.Apps.Glossaries.Entities
+@using MrCMS.Web.Apps.Glossaries.Models
+@model MrCMS.Web.Apps.Glossaries.Pages.Glossary
+<h1 class="margin-top-0">@Editable(Model, p => p.Name, false)</h1>
+@Editable(Model, p => p.BodyContent, true)
+@{
+    var pagedList = ViewData["paged-glossaryItems"] as IPagedList<GlossaryItem>;
+    var searchModel = ViewData["glossary-search-model"] as GlossarySearchModel;
+}
+@if (pagedList !=null && !pagedList.Any() && !string.IsNullOrEmpty(searchModel.Term))
+{
+    <div class="alert alert-info">No definitions available for '@searchModel.Term'.</div>
+    <p><a href="/@Model.LiveUrlSegment">Show all</a></p>
+}
+@if (pagedList != null)
+{
+    <dl>
+        @foreach (var item in pagedList)
+        {
+            <dt>@Html.DisplayFor(m => item.Term)</dt>
+            <dd>@Html.DisplayFor(m => item.Definition)</dd>
+        }
+    </dl>
+
+
+}
+
+@Html.PageCurrentPage(pagedList, i => new { Page = i }, PagedListRenderOptions.PageNumbersOnly)

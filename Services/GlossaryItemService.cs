@@ -9,13 +9,28 @@ using NHibernate.Criterion;
 
 namespace MrCMS.Web.Apps.Glossaries.Services
 {
-    public class GlossaryService : IGlossaryService
+    public class GlossaryItemService : IGlossaryItemService
     {
         private readonly ISession _session;
 
-        public GlossaryService(ISession session)
+        public GlossaryItemService(ISession session)
         {
             _session = session;
+        }
+
+        public void Add(GlossaryItem item)
+        {
+            _session.Transact(session => session.Save(item));
+        }
+
+        public void Update(GlossaryItem item)
+        {
+            _session.Transact(session => session.Update(item));
+        }
+
+        public void Delete(GlossaryItem item)
+        {
+            _session.Transact(session => session.Delete(item));
         }
 
         public IPagedList<GlossaryItem> GetGlossaryItems(Glossary page, GlossarySearchModel model)

@@ -1,0 +1,28 @@
+﻿@model MrCMS.Web.Apps.Glossaries.Entities.GlossaryItem
+@using System.Web.Mvc.Html
+@{ Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "GlossaryItems", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <fieldset>
+        <legend>
+            Edit Glossary Item
+            <span class="btn-group display-inline pull-right">
+                <input type="submit" class="btn-success btn" value="Edit" />
+            </span>
+        </legend>
+        @Html.HiddenFor(item => item.Id)
+        <div class="form-group">
+            @Html.LabelFor(x => x.Term)
+            @Html.TextBoxFor(x => x.Term, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Term)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Definition)
+            @Html.TextAreaFor(x => x.Definition, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Definition)
+        </div>
+    </fieldset>
+}

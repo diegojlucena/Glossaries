@@ -10,9 +10,9 @@ namespace MrCMS.Web.Apps.Glossaries.Controllers
 {
     public class GlossaryController : MrCMSAppUIController<GlossariesApp>
     {
-        private readonly IGlossaryService _glossaryService;
+        private readonly IGlossaryItemService _glossaryService;
 
-        public GlossaryController(IGlossaryService glossaryService)
+        public GlossaryController(IGlossaryItemService glossaryService)
         {
             _glossaryService = glossaryService;
         }
